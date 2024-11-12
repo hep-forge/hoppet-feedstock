@@ -28,4 +28,4 @@ anaconda:
         done
 
 debug:
-	@conda debug .
+	@conda debug -c hep-forge -c conda-forge -c defaults .
