@@ -1,9 +1,10 @@
 #! /usr/bin/bash
 
-./configure --prefix=${PREFIX}
+mkdir build
 
-make -j$(nproc)
-make check
+cmake -S . -B build -DCMAKE_INSTALL_PREFIX=$PREFIX
 
-make install
-make install-mod
+cmake --build  build -j$(nproc)
+cmake --install build
+
+ctest --test-dir build

@@ -1,31 +1,27 @@
-{% set versions = {
-    "1.2.0" : "6e00eb56a4f922d03dfceba7b389a3aaf51f277afa46d7b634d661e0797e8898"
-} %}
-
-
-{% set version = environ.get('COMMIT_VERSION', None) %}
-{% set version = version or versions.keys()|first %}
+{% set version = environ.get('COMMIT_VERSION', "HEAD") %}
 {% set version = version|string %}
 
 package:
   name: {{ environ.get('ANACONDA_PACKAGE', "hoppet")|string|lower }}
-  version: {{ environ.get('ANACONDA_VERSION', version)|replace('/', '.')|replace('-', '.') }}
+  version: {{ environ.get('ANACONDA_VERSION', version)|replace("-", ".") }}
 
 source:
-  url: "https://github.com/hoppet-code/hoppet/archive/refs/tags/hoppet-{{ version }}.tar.gz"
-  {% if versions.get(version, None) %}
-  sha256: {{ versions.get(version) }}
-  {% endif %}
+  git_url: "https://gitlab.cern.ch/fitters/xfitter"
+  git_rev: {{ version }}
 
 requirements:
   build:
     - {{ compiler('gfortran') }}   # GNU Fortran compiler
-    - {{ compiler('c') }}          # GNU C compiler
-    - {{ compiler('cxx') }}        # GNU C++ compiler
-    
+
     - cmake                        # Build system
     - make                         # Make utility
     - python
+
+  host:
+    - lhapdf
+
+  run:
+    - lhapdf
 
 about:
   home: "https://github.com/hoppet-code/hoppet"
