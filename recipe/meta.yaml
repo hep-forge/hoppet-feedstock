@@ -1,4 +1,4 @@
-{% set version = environ.get('COMMIT_VERSION', "HEAD") %}
+{% set version = environ.get('COMMIT_VERSION', None) %}
 {% set version = version|string %}
 
 package:
@@ -7,7 +7,7 @@ package:
 
 source:
   git_url: "https://github.com/hoppet-code/hoppet"
-  git_rev: {{ version }}
+  git_rev: {{ environ.get('COMMIT_TAG', "HEAD") }}
 
 requirements:
   build:
