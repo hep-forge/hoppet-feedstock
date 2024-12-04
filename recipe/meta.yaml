@@ -3,7 +3,7 @@
 
 package:
   name: {{ environ.get('ANACONDA_PACKAGE', "hoppet")|string|lower }}
-  version: {{ environ.get('ANACONDA_VERSION', version)|replace("-", ".") }}
+  version: {{ environ.get('ANACONDA_VERSION', version)|replace("hoppet-", "")|replace("-", ".") }}
 
 source:
   git_url: "https://github.com/hoppet-code/hoppet"
