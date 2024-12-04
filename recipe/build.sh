@@ -8,4 +8,4 @@ make check
 make install
 make install-mod
 
-rm ${PREFIX}/lib/libhoppet_v1.a
+rm ${PREFIX}/lib/libhoppet*.a
