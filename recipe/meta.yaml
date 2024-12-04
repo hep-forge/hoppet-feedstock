@@ -25,7 +25,6 @@ requirements:
     
     - cmake                        # Build system
     - make                         # Make utility
-    - python
 
 about:
   home: "https://github.com/hoppet-code/hoppet"
