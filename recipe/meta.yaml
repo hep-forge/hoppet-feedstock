@@ -15,6 +15,11 @@ source:
   git_url: "https://github.com/hoppet-code/hoppet"
   git_rev: {{ versions.get(version, "HEAD") }}
 
+
+build:
+  run_exports:
+    - {{ pin_subpackage(name, max_pin="x.x.x") }}
+
 requirements:
   build:
     - {{ compiler('gfortran') }}   # GNU Fortran compiler
