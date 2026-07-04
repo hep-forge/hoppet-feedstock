@@ -1,6 +1,6 @@
 {% set versions = {
     "2.2.0": "b1d40ea429a58b3ffbbb7e5d344b08cf5969650e",
-    "1.2.0": "legacy"
+    "1.2.0": "hoppet-1.2.0"
 } %}
 
 {% set version = environ.get('COMMIT_VERSION', None) %}
@@ -15,6 +15,10 @@ package:
 
 source:
   git_url: "https://github.com/hoppet-code/hoppet"
+  # "legacy" (the branch this used to point to) no longer exists
+  # upstream; hoppet-1.2.0 is the last tagged pre-2.0 release, kept
+  # around because applgrid still depends on this version's API
+  # (hoppet_v1.h / libhoppet_v1.a, renamed in the 2.x rewrite).
   git_rev: {{ versions.get(version, "HEAD") }}
 
 
@@ -28,9 +32,14 @@ requirements:
     - {{ compiler('c') }}          # GNU C compiler
     - {{ compiler('cxx') }}        # GNU C++ compiler
 
+    {% if version == "1.2.0" %}
+    - make                         # Make utility
+    - perl                         # 1.2.0's ./configure is a Perl script, not autotools/CMake
+    {% else %}
     - cmake                        # Build system
     - make                         # Make utility
     - python
+    {% endif %}
 
   host:
     - lhapdf
