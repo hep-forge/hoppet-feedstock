@@ -15,7 +15,16 @@ case "$PKG_VERSION" in
     # `src` (the actual libhoppet_v1.a + hoppet_v1.h/.mod) and skip
     # example_f90/benchmarking, which need LHAPDF example programs we
     # don't need for a library package.
-    ./configure --prefix="${PREFIX}" FC="${FC}" FFLAGS="${FFLAGS} -fPIC"
+    #
+    # Deliberately NOT using conda's full ${FFLAGS}: it includes
+    # -ftree-vectorize, which auto-vectorizes EXP() calls in hoppet's
+    # DGLAP evolution code into calls to glibc's libmvec
+    # (_ZGVbN2v_exp). That's harmless for a normal shared-lib build,
+    # but this static .a gets linked directly INTO applgrid's .so,
+    # and applgrid's own link step doesn't pull in -lmvec -- symbol
+    # stays undefined until "symbol lookup error" at runtime. Plain
+    # -O2 -fPIC avoids introducing that dependency in the first place.
+    ./configure --prefix="${PREFIX}" FC="${FC}" FFLAGS="-O2 -fPIC"
     make src
     make install
     ;;
