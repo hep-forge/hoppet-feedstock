@@ -30,6 +30,7 @@ requirements:
   build:
     - {{ compiler('gfortran') }}   # GNU Fortran compiler
     - {{ compiler('c') }}          # GNU C compiler
+    - {{ stdlib('c') }}
     - {{ compiler('cxx') }}        # GNU C++ compiler
 
     {% if version == "1.2.0" %}
@@ -57,6 +58,6 @@ about:
 extra:
   recipe-maintainers:
     - meiyasan
-  keep_versions:
+  lts:
     main:
       - "1.2.0"   # applgrid pins to this exact pre-2.0 release; the newest-2 auto-trim would otherwise delete it
