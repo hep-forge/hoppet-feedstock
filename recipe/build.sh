@@ -30,6 +30,13 @@ case "$PKG_VERSION" in
     ;;
 
   *)
+    # unit-tests/check-thread-safety.cc uses std::thread but
+    # unit-tests/CMakeLists.txt only links it to hoppet_static, not
+    # pthread -- a real upstream bug that a stricter/newer toolchain
+    # no longer papers over implicitly ("undefined reference to
+    # pthread_join").
+    sed -i 's/target_link_libraries(check-thread-safety hoppet_static)/find_package(Threads REQUIRED)\ntarget_link_libraries(check-thread-safety hoppet_static Threads::Threads)/' unit-tests/CMakeLists.txt
+
     cmake -S . -B build -DCMAKE_INSTALL_PREFIX=$PREFIX
 
     cmake --build build -j$NPROC
