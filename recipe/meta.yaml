@@ -40,6 +40,7 @@ requirements:
     - cmake                        # Build system
     - make                         # Make utility
     - python
+    - sed                          # unit-tests/CMakeLists.txt patch uses `sed -i`; needs GNU semantics
     {% endif %}
 
   host:
