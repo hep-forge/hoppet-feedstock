@@ -37,7 +37,11 @@ case "$PKG_VERSION" in
     # pthread_join").
     sed -i 's/target_link_libraries(check-thread-safety hoppet_static)/find_package(Threads REQUIRED)\ntarget_link_libraries(check-thread-safety hoppet_static Threads::Threads)/' unit-tests/CMakeLists.txt
 
-    cmake -S . -B build -DCMAKE_INSTALL_PREFIX=$PREFIX
+    # ${CMAKE_ARGS} carries conda-build's own -DCMAKE_BUILD_TYPE=Release
+    # (plus toolchain/strip paths) -- omitting it leaves CMAKE_BUILD_TYPE
+    # unset (this project's own CMakeLists.txt never defaults it
+    # either), producing an unoptimized, unstripped debug-info binary.
+    cmake -S . -B build ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=$PREFIX
 
     cmake --build build -j$NPROC
     cmake --install build
