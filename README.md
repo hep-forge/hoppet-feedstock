@@ -13,7 +13,12 @@ HOPPET: Higher Order Perturbative Parton Evolution Toolkit
 
 ## Architectures
 
-State per architecture: see the platforms badge above or [anaconda.org/hep-forge/hoppet](https://anaconda.org/hep-forge/hoppet).
+| Architecture | Latest published |
+|--------------|------------------|
+| linux-amd64 (`linux-64`) | ✅ `2.2.0` |
+| linux-arm64 (`linux-aarch64`) | ✅ `2.2.0` |
+
+_As of the last feedstock render; the badges above are live._
 
 
 ## Install
