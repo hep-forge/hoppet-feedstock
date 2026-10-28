@@ -12,9 +12,11 @@ c_stdlib_version:
   - 11.0    # [osx]
 
 c_compiler:
-  - gcc
+  - gcc      # [linux]
+  - clang    # [osx]
 cxx_compiler:
-  - gxx
+  - gxx      # [linux]
+  - clangxx  # [osx]
 
 # ---- Compiler floor (ABI)
 # Pin the compiler major instead of inheriting conda-build's "newest
