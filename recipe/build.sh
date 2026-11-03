@@ -41,6 +41,10 @@ case "$PKG_VERSION" in
     # (plus toolchain/strip paths) -- omitting it leaves CMAKE_BUILD_TYPE
     # unset (this project's own CMakeLists.txt never defaults it
     # either), producing an unoptimized, unstripped debug-info binary.
+    # some sources use std::vector without <vector>; libc++ does not pull it in
+    if [[ "$(uname)" == "Darwin" ]]; then
+      export CXXFLAGS="${CXXFLAGS} -include vector"
+    fi
     cmake -S . -B build ${CMAKE_ARGS} -DCMAKE_INSTALL_PREFIX=$PREFIX
 
     cmake --build build -j$NPROC
