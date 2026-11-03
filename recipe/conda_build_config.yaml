@@ -45,3 +45,8 @@ libstdcxx_version:
 # with the gfortran major that wrote them, and GCC 14 is the channel floor.
 fortran_compiler_version:   # [linux]
   - 14                       # [linux]
+
+# 1.2.0's configure is a Perl script. conda-build's default perl variant
+# (5.26.2) has no osx-arm64 build; use conda-forge's there.
+perl:
+  - 5.32.1  # [osx]
